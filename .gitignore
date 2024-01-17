@@ -1,0 +1,65 @@
+# Ignore Django-specific files and directories
+s3_backend/__pycache__/
+s3_backend/*.pyc
+s3_backend/*.pyo
+s3_backend/*.pyd
+s3_backend/*.db
+s3_backend/*.sqlite3
+s3_backend/*.log
+s3_backend/media/
+
+# Ignore React-specific files and directories
+s3-frontend/node_modules/
+s3-frontend/build/
+s3-frontend/dist/
+s3-frontend/npm-debug.log*
+s3-frontend/yarn-error.log*
+s3-frontend/*.iml
+s3-frontend/.vscode/
+s3-frontend/*.env
+s3-frontend/.DS_Store
+
+# IDE and Text Editor Files
+.idea/
+.vscode/
+*.pyc
+*.swo
+*.swp
+*.log
+
+# Compiled Python files
+*.pyc
+
+# Dependency directories
+s3_backend/__pycache__/
+s3_backend/venv/
+s3_backend/env/
+s3-frontend/node_modules/
+s3-frontend/venv/
+s3-frontend/env/
+
+# Local development settings
+s3_backend/local_settings.py
+
+# Compiled source
+s3_backend/__pycache__/
+s3_backend/*.pyc
+s3_backend/*.pyo
+s3_backend/*.pyd
+
+# Database
+s3_backend/db.sqlite3
+
+# Static files
+s3_backend/static/
+
+# Media files
+s3_backend/media/
+
+# Environment variables
+s3-frontend/.env
+
+# Log files
+*.log
+
+venv/
