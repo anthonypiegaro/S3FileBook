@@ -42,13 +42,18 @@ const PDF = () => {
             "file": file,
         };
 
+        const formData = new FormData();
+
+        formData.append("name", name);
+        formData.append("date", date.format("YYYY-MM-DD"));
+        formData.append("file", file);
+
         await fetch("http://127.0.0.1:8000/pdf-handler-api/documents/", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
-            body: JSON.stringify(data)
+            body: formData
         })
         .then(async response => {
             if (response.ok) {
