@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -128,4 +129,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Set the access token lifetime (default is 5 minutes)
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),  # Set the refresh token lifetime (default is 1 day)
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=7),  # Set the maximum sliding token lifetime (default is 1 week)
+    'SLIDING_TOKEN_REFRESH_TIMEOUT_LIFETIME': timedelta(days=14),  # Set the refresh token timeout lifetime (default is 2 weeks)
 }
