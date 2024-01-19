@@ -1,4 +1,5 @@
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,10 +8,16 @@ from .serializers import DocumentSerializer
 
 class DocumentView(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser]
 
     def post(self, request):
-        serializer = DocumentSerializer(data=request.data)
+        name = request.data["name"]
+        date = request.data["date"]
+        file = request.data["file"]
+        user = request.user.id
+        data = {"user": user, "name": name, "date": date, "pdf_file": file}
+        serializer = DocumentSerializer(data=data)
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
