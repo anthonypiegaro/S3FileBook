@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import PDFDatePicker from "./PDFDatePicker";
 import PDFInput from "./PDFInput";
 import dayjs from "dayjs";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const PDF = () => {
     const [date, setDate] = useState(dayjs());
@@ -24,19 +25,60 @@ const PDF = () => {
             "file": fileStatus
         });
 
-        console.log(fileStatus && nameStatus && dateStatus);
-
         return (fileStatus && nameStatus && dateStatus)
+    }
+
+    const handleSubmit = async () => {
+        setLoading(true);
+
+        if (!validate()) {
+            setLoading(false);
+            return null;
+        };
+
+        const data = {
+            "name": name,
+            "date": date.format("YYYY-MM-DD"),
+            "file": file,
+        };
+
+        await fetch("http://127.0.0.1:8000/pdf-handler-api/documents/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(data)
+        })
+        .then(async response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                // If response is from invalid getDateSectionConfigFromFormatToken, sogn out with notif
+                const errorData = await response.json();
+                setError(errorData.detail);
+                throw new Error("Invalid credentials");
+            }
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => console.log(error));
+
+        setLoading(false);
     }
 
     return (
         <div className="pdf-page">
             <div className="header">Add PDF</div>
             <form>
-                <TextField label="PDF Name" variant="outlined" value={name} onChange={(event) => setName(event.target.value)} />
+                <TextField label="PDF Name" variant="outlined" error={!inputsValidState["name"]} value={name} onChange={(event) => setName(event.target.value)} />
                 <PDFDatePicker date={date} setDate={setDate} />
-                <PDFInput file={file} setFile={setFile} />
-                <Button variant="outlined" sx={{borderColor: "black", color: "black"}} onClick={validate}>Submit</Button>
+                <PDFInput file={file} setFile={setFile} error={!inputsValidState["file"]}/>
+                <Button variant="outlined" sx={{borderColor: "black", color: "black"}} onClick={handleSubmit}>
+                    {loading ? <CircularProgress /> : <>Submit</> }
+                </Button>
+                {error && <p style={{textAlign: "center"}}>{error}</p>}
             </form>
         </div>
     );

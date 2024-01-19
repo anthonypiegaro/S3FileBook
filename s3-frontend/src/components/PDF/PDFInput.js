@@ -2,11 +2,13 @@ import React from "react";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Button from "@mui/material/Button";
 
-const PDFInput = ({file, setFile}) => {
+const PDFInput = ({file, setFile, error}) => {
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
+
+    const borderColor = error ? "red" : "black";
 
     return (
         <div className="upload-file-btn">
@@ -23,6 +25,7 @@ const PDFInput = ({file, setFile}) => {
                 component="span"
                 sx={{borderColor: "black", color: "black"}}
                 startIcon={<CloudUploadIcon />}
+                style={{borderColor: borderColor}}
                 >
                 Upload File
                 </Button>

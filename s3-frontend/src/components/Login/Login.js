@@ -35,7 +35,7 @@ const Login = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem("Token", data.token);
+                localStorage.setItem("token", data.access);
                 navigate("/pdf"); // Use navigate function to navigate
             } else {
                 const errorData = await response.json();
