@@ -21,3 +21,12 @@ class DocumentView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, file_name):
+        pass
+
+class UserDocumentsView(APIView):
+    def get(self, request):
+        documents = Document.objects.filter(user=request.user)
+        serializer = DocumentSerializer(instance=documents, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
