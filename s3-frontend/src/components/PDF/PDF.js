@@ -5,6 +5,7 @@ import PDFDatePicker from "./PDFDatePicker";
 import PDFInput from "./PDFInput";
 import dayjs from "dayjs";
 import CircularProgress from '@mui/material/CircularProgress';
+import Navbar from "../Navbar/Navbar";
 
 const PDF = () => {
     const [date, setDate] = useState(dayjs());
@@ -59,7 +60,6 @@ const PDF = () => {
             if (response.ok) {
                 return response.json();
             } else {
-                // If response is from invalid getDateSectionConfigFromFormatToken, sogn out with notif
                 const errorData = await response.json();
                 setError(errorData.detail);
                 throw new Error("Invalid credentials");
@@ -75,6 +75,7 @@ const PDF = () => {
 
     return (
         <div className="pdf-page">
+            <Navbar />
             <div className="header">Add PDF</div>
             <form>
                 <TextField label="PDF Name" variant="outlined" error={!inputsValidState["name"]} value={name} onChange={(event) => setName(event.target.value)} />
