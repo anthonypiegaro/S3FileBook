@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import PDFListContianer from "./PDFListContianer";
+import Navbar from "../Navbar/Navbar";
 
 const PDFView = () => {
     const [documents, setDocuments] = useState([]);
@@ -43,6 +44,7 @@ const PDFView = () => {
 
     return (
         <div className="pdf-view-page">
+            <Navbar />
             <div className="header pdf-view-page-header">Your PDF Documents</div>
             {loading && <div className="content-loading"><CircularProgress /></div>}
             {documents.length !== 0 && <PDFListContianer documents={documents} />}
